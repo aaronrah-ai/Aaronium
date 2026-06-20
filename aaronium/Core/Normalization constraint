@@ -1,0 +1,16 @@
+import math
+
+def T(x, alpha=1.0, beta=1.0):
+    return (
+        math.log(x)
+        + alpha * math.sqrt(x)
+        + beta * math.log10(x)
+    )
+
+def normalize(x, reference=10.0):
+    return T(x) / T(reference)
+
+x = math.sqrt(math.e)
+
+print("Input x =", x)
+print("Normalized Value =", normalize(x))
