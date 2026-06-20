@@ -1,0 +1,13 @@
+import math
+
+def T(x, alpha=1.0, beta=1.0):
+    return (
+        math.log(x)
+        + alpha * math.sqrt(x)
+        + beta * math.log10(x)
+    )
+
+x = math.log10(41.5)
+
+print("Input x =", x)
+print("T(x) =", T(x))
