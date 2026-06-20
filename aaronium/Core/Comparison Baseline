@@ -1,0 +1,22 @@
+import math
+
+PHI = (1 + math.sqrt(5)) / 2
+
+def T(x, alpha=1.0, beta=1.0):
+    return (
+        math.log(x)
+        + alpha * math.sqrt(x)
+        + beta * math.log10(x)
+    )
+
+def normalize(x, reference=10.0):
+    return T(x) / T(reference)
+
+def phi_distance(x):
+    return abs(normalize(x) - PHI)
+
+x = 0.5 + math.sqrt(1.25)
+
+print("Input x =", x)
+print("φ =", PHI)
+print("Distance from φ =", phi_distance(x))
