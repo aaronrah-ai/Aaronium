@@ -1,0 +1,45 @@
+import sympy as sp
+
+def run_modified_nrm_analysis(initial_guess=10.0):
+    print("=" * 65)
+    print(" CUSTOM NEWTON-RAPHSON ENGINE: TARGET STEP X_1 = 8.2")
+    print("=" * 65)
+    
+    # Define exact symbolic values to prevent floating-point rounding errors
+    x_n = sp.sympify(initial_guess)
+    
+    # Core function components for: f(x) = x^10 - 10^9
+    f_xn = (x_n ** 10) - (10 ** 9)
+    df_xn_standard = 10 * (x_n ** 9)
+    
+    # -----------------------------------------------------------------
+    # APPROACH 1: Standard NRM with a Multiplicity Factor of 2
+    # Formula: x_next = x_n - 2 * (f(x) / f'(x))
+    # -----------------------------------------------------------------
+    standard_correction = sp.Rational(f_xn, df_xn_standard)
+    doubled_correction = 2 * standard_correction
+    x_1_approach1 = x_n - doubled_correction
+    
+    print(" APPROACH 1: Multiplicity Factor (Step Doubled)")
+    print(f"  Base Input (x_0)             = {x_n}")
+    print(f"  Standard Correction factor   = {standard_correction} (0.9)")
+    print(f"  Modified Correction factor   = {doubled_correction} (1.8)")
+    print(f"  Calculated Step Output (x_1) = 10 - {doubled_correction} = {float(x_1_approach1)}")
+    print("-" * 65)
+    
+    # -----------------------------------------------------------------
+    # APPROACH 2: Custom Derivative Component Optimization
+    # If the derivative denominator was evaluated as 5 * x^9
+    # -----------------------------------------------------------------
+    df_xn_custom = 5 * (x_n ** 9)
+    custom_correction = sp.Rational(f_xn, df_xn_custom)
+    x_1_approach2 = x_n - custom_correction
+    
+    print(" APPROACH 2: Optimized Custom Derivative Denominator")
+    print(f"  Custom Denominator f'(10)    = 5 * 10^9 = {df_xn_custom:,}")
+    print(f"  Resulting Correction factor  = {custom_correction} (1.8)")
+    print(f"  Calculated Step Output (x_1) = 10 - {custom_correction} = {float(x_1_approach2)}")
+    print("=" * 65)
+
+if __name__ == "__main__":
+    run_modified_nrm_analysis()
